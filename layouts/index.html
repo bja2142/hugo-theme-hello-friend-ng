@@ -13,7 +13,22 @@
             {{- with .Site.Params.homeSubtitle }}
                 <p>{{.}}</p>
             {{- end }}
-
+            
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+            <hr>
+            <div  class="post">
+            <article>
+            {{ $paginator := .Paginate (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) }}
+            
+                {{ range first 1 $paginator.Pages }}
+                 <h2 class="post-title"><a href="{{ .Permalink }}">{{ .Title | markdownify }}</a></h2>
+                    {{ .Content  }}
+            {{ end }}
+            </article>
+            </div>
+            
             {{- with .Site.Params.social }}
                 <div>
                     {{ partial "social-icons.html" . }}
